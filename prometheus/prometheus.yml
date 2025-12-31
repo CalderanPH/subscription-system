@@ -1,0 +1,47 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'subscription-system'
+    environment: 'development'
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'eureka-server'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['eureka-server:8761']
+        labels:
+          service: 'eureka-server'
+
+  - job_name: 'user-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['user-service:8081']
+        labels:
+          service: 'user-service'
+
+  - job_name: 'subscription-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['subscription-service:8082']
+        labels:
+          service: 'subscription-service'
+
+  - job_name: 'payment-service'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['payment-service:8083']
+        labels:
+          service: 'payment-service'
+
+  - job_name: 'api-gateway'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['api-gateway:8080']
+        labels:
+          service: 'api-gateway'
+
